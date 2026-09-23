@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jennah-sdk-py"
+dynamic = ["version"]
+description = "Python SDK for Jennah, the memory and context platform for AI agents"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = [
+  # The protobuf runtime must be at least the gencode version pinned in
+  # jennah-api's buf.gen.yaml (protocolbuffers/python v29.3); bump together.
+  "protobuf>=5.29.3,<7",
+  "grpcio>=1.70",
+  # google.api annotations, imported by the generated code. Taken from here
+  # rather than vendored, so the SDK does not ship a second copy of google.api.
+  "googleapis-common-protos>=1.66",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.urls]
+Source = "https://github.com/alphauslabs/jennah-sdk-py"
+
+[tool.hatch.version]
+# Written by jennah-api's ci/python/assemble.sh from the release tag.
+path = "src/jennah/_version.py"
+
+[tool.hatch.build]
+# The generated code is gitignored (it is never committed) but must ship, and
+# hatch leaves out VCS-ignored files unless told otherwise.
+ignore-vcs = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jennah", "src/gnostic"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/", "tests/", "conformance/", "README.md", "LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
