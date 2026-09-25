@@ -1,4 +1,4 @@
-# jennah-sdk-py
+## jennah-sdk-py
 
 The Python SDK for [Jennah](https://jennah.nightblue.io/), the memory and context
 platform for AI agents.
