@@ -58,6 +58,7 @@ REPLAYABLE_READS = frozenset({
     _APPROVAL + "ListApprovers",
     _APPROVAL + "DescribeApprovalByToken",
     _BILLING + "GetBillingState",
+    _BILLING + "GetFormationTokenUsage",
     _PLATFORM + "ListLocations",
 })
 

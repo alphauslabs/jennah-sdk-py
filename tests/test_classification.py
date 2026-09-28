@@ -32,7 +32,7 @@ def published_methods() -> set[str]:
 def test_every_method_is_classified_exactly_once():
     methods = published_methods()
     # A floor, so a walk that found nothing fails without every new RPC failing it.
-    assert len(methods) >= 66, f"walked {len(methods)} methods, expected at least 66"
+    assert len(methods) >= 67, f"walked {len(methods)} methods, expected at least 67"
     wrong = {m: sum(m in s for s in SETS) for m in methods}
     assert not {m: n for m, n in wrong.items() if n != 1}, "each method must be in exactly one set"
 
