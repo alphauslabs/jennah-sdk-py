@@ -121,6 +121,8 @@ NEVER_REPLAY = frozenset({
     # Commits the enterprise to a paid agreement.
     _BILLING + "BindMarketplaceRegistration",
     _BILLING + "ResolveMarketplaceRegistration",
+    # Commits the enterprise to more spend, and records each change.
+    _BILLING + "SetFormationOverageCap",
 })
 
 
