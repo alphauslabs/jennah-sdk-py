@@ -39,6 +39,7 @@ REPLAYABLE_READS = frozenset({
     _MEMORY + "QueryMemory",
     _MEMORY + "InspectMemory",
     _MEMORY + "GetMemoryVocabulary",
+    _MEMORY + "GetFormationModel",
     _SCOPE + "GetScope",
     _SCOPE + "ListScopes",
     _DATASET + "GetDataset",
@@ -89,6 +90,11 @@ NEVER_REPLAY = frozenset({
     # declaration would overwrite it; rare administrative calls the caller retries.
     _MEMORY + "DeclareMemoryVocabulary",
     _MEMORY + "RemoveMemoryVocabulary",
+    # The formation model: setting runs a probe on the enterprise's own model and
+    # replaces the model set; rare administrative calls the caller retries knowingly.
+    _MEMORY + "PrepareFormationModel",
+    _MEMORY + "SetFormationModel",
+    _MEMORY + "RemoveFormationModel",
     # A long poll that reports a pending approval as success.
     _APPROVAL + "WaitApproval",
     # Each sends mail, records a decision, or ends an approval.
