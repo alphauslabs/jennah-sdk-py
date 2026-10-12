@@ -95,6 +95,8 @@ NEVER_REPLAY = frozenset({
     _MEMORY + "PrepareFormationModel",
     _MEMORY + "SetFormationModel",
     _MEMORY + "RemoveFormationModel",
+    # Checking makes a real call to the enterprise's own model, which it pays for.
+    _MEMORY + "CheckFormationModel",
     # A long poll that reports a pending approval as success.
     _APPROVAL + "WaitApproval",
     # Each sends mail, records a decision, or ends an approval.
