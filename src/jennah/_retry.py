@@ -40,6 +40,7 @@ REPLAYABLE_READS = frozenset({
     _MEMORY + "InspectMemory",
     _MEMORY + "GetMemoryVocabulary",
     _MEMORY + "GetFormationModel",
+    _MEMORY + "GetFormation",
     _SCOPE + "GetScope",
     _SCOPE + "ListScopes",
     _DATASET + "GetDataset",
@@ -67,6 +68,7 @@ REPLAYABLE_READS = frozenset({
 CONDITIONAL_REPLAY = frozenset({
     _MEMORY + "CommitMemory",
     _MEMORY + "FormMemory",
+    _MEMORY + "SubmitFormation",
     _DATA + "CommitData",
     _APPROVAL + "CreateApproval",
 })
@@ -141,6 +143,8 @@ def safe_to_replay(method: str, request: object) -> bool:
       is append-only, so a commit carrying a log section is not replayed.
     * FormMemory: only with ``formation_key``; extraction is nondeterministic, so
       a blind replay forms a second, different set of memory.
+    * SubmitFormation: only with ``formation_key``, for the same reason; a replay
+      under the same key returns the formation already accepted.
     * CommitData: only with ``idempotency_key``.
     * CreateApproval: only with ``request_key``; mail cannot be recalled.
 
@@ -150,7 +154,7 @@ def safe_to_replay(method: str, request: object) -> bool:
         return True
     if method == _MEMORY + "CommitMemory":
         return not request.HasField("log")
-    if method == _MEMORY + "FormMemory":
+    if method in (_MEMORY + "FormMemory", _MEMORY + "SubmitFormation"):
         return bool(request.formation_key)
     if method == _DATA + "CommitData":
         return bool(request.idempotency_key)
