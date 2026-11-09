@@ -117,6 +117,10 @@ NEVER_REPLAY = frozenset({
     _AUTH + "Logout",
     _AUTH + "CreateApiKey",
     _AUTH + "RevokeApiKey",
+    # Ripple sign-in: a replayed wrong password counts toward Ripple's lockout,
+    # a replayed email-code request sends another email.
+    _AUTH + "RipplePasswordLogin",
+    _AUTH + "RequestRippleEmailCode",
     # Membership, role and enterprise administration.
     _AUTH + "InviteMember",
     _AUTH + "RevokeInvitation",
